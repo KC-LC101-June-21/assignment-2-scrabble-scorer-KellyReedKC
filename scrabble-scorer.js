@@ -61,7 +61,7 @@ function simpleScore(word) {
 let vowelBonusScore = function(word) {
 
   let vowels = ["a", "e", "i", "o", "u"];
-  word = word.toLowerCase()
+  word = word.toLowerCase() /* <== */
   let letterPoints = 0
 
   for (let i = 0; i < word.length; i++) {
@@ -77,7 +77,16 @@ let vowelBonusScore = function(word) {
   return letterPoints
 }
 
-let scrabbleScore;
+let scrabbleScore = function(word) {
+  word = word.toLowerCase()
+  let sumScore = 0
+
+  for (let i = 0; i < word.length; i++) {
+
+    sumScore += newPointStructure[word[i]]
+  }
+  return sumScore
+}
 
 const scoringAlgorithms = [
   {
@@ -95,7 +104,7 @@ const scoringAlgorithms = [
   {
     name: "Scrabble",
     description: "The traditional scoring algorithm.",
-    scoringFunction: oldScrabbleScorer
+    scoringFunction: scrabbleScore
   }
 ];
 
@@ -114,7 +123,19 @@ function scorerPrompt() {
  }
 
 
-function transform() {};
+function transform(oldObject) { 
+  
+  let newObject = {}
+
+  for (keys in oldObject) {
+
+    for (let i = 0; i < oldObject[keys].length; i++) {
+      newObject[oldObject[keys][i].toLowerCase()] = Number(keys)
+    }
+  }
+
+  return newObject
+};
 
 let newPointStructure = transform(oldPointStructure);
 
